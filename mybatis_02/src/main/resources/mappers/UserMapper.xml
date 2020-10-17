@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 绑定一个对应的dao/mapper接口-->
+<mapper namespace="com.lbx.mapper.UserMapper">
+
+    <resultMap id="userAll" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="sex" column="sex"/>
+        <result property="tel" column="tel"/>
+        <result property="addr" column="addr"/>
+    </resultMap>
+
+    <select id="findOneById" resultMap="userAll">
+        select * from user where user.id=#{id};
+    </select>
+
+</mapper>

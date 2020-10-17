@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis 配置文件-->
+<configuration>
+    <properties resource="db.properties"/>
+
+    <settings>
+        <!--标准日志工厂实现-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+<!--        <setting name="logImpl" value="LOG4J"/>-->
+    </settings>
+
+    <typeAliases>
+        <!--        <typeAlias type="com.lbx.pojo.User" alias="User"/>-->
+        <package name="com.lbx.entity"/>
+    </typeAliases>
+
+
+    <!--环境  例如 开发环境  测试环境....-->
+    <environments default="myCat"> <!--默认 development-->
+        <environment id="myCat">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+<!--        使用 resource 是文件夹格式 包名可以自定义-->
+        <mapper resource="com/lbx/dao/UserMapper.xml"/>
+        <mapper resource="com/lbx/dao/UserInfoMapper.xml"/>
+        <!--使用package 包名要一直 只需要指定包名即可 -->
+<!--        <package name="com.lbx.dao"/>-->
+        <!--class 包名要一至 只需要指定包名.* -->
+<!--        <mapper class="com.lbx.dao.UserMapper"/>-->
+    </mappers>
+</configuration>

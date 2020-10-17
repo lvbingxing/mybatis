@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbx.dao.UserMapper">
+<!--查询用户 和 信息-->
+    <select id="getUserById" resultMap="userAndInfo">
+        select id uid, uname, pwd, levelid from user u where u.id=#{uid}
+    </select>
+    <resultMap id="userAndInfo" type="user">
+        <association property="userInfo" column="uid"
+                     javaType="UserInfo" select="getUserInfo"/>
+    </resultMap>
+    <select id="getUserInfo" resultType="userInfo">
+        select  * from userinfo i where i.id=#{uid}
+    </select>
+
+<!--查询用户和用户等级-->
+    <select id="getUserByIdAndLevel" parameterType="int" resultMap="userAndLevel">
+        select * from user u where u.id=#{uid}
+    </select>
+    <resultMap id="userAndLevel" type="user">
+        <association property="ulevel" column="levelid"
+                     javaType="Ulevel" select="getLevel" />
+    </resultMap>
+    <select id="getLevel" resultType="Ulevel">
+        select name from ulevel where levelid=#{levelid}
+    </select>
+
+<!--    查询地址中有陕西的所有用户-->
+    <select id="getUsesByAddr" parameterType="string">
+        select * from userinfo where addr like '陕西%';
+    </select>
+</mapper>

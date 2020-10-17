@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis 配置文件-->
+<configuration>
+    <properties resource="db.properties"/>
+    <typeAliases>
+<!--        <typeAlias type="com.lbx.pojo.User" alias="User"/>-->
+        <package name="com.lbx.pojo"/>
+    </typeAliases>
+
+
+    <!--环境  例如 开发环境  测试环境....-->
+    <environments default="myCat"> <!--默认 development-->
+        <environment id="local">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver.8.0.19}"/>
+                <property name="url" value="${jdbc.url.win.mysql}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="myCat">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver.5.1.35}"/>
+                <property name="url" value="${jdbc.url.myCat}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/UserinfoMapper.xml"/>
+    </mappers>
+</configuration>

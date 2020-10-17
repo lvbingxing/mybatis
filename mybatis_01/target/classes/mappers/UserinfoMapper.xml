@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lbx.mapper.UserinfoMapper">
+
+    <resultMap type="com.lbx.pojo.Userinfo" id="UserinfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="addr" column="addr" jdbcType="VARCHAR"/>
+        <result property="updatetime" column="updatetime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+
+
+
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into mybatis.userinfo(id, username, tel, email)
+        values (#{id}, #{username}, #{tel}, #{email})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into mybatis.userinfo(id, username, sex, tel, email, addr, updatetime)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id}, #{entity.username}, #{entity.sex}, #{entity.tel}, #{entity.email}, #{entity.addr},
+            #{entity.updatetime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into mybatis.userinfo(id, username, sex, tel, email, addr, updatetime)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id}, #{entity.username}, #{entity.sex}, #{entity.tel}, #{entity.email}, #{entity.addr},
+            #{entity.updatetime})
+        </foreach>
+        on duplicate key update
+        id = values(id) , username = values(username) , sex = values(sex) , tel = values(tel) , email = values(email) ,
+        addr = values(addr) , updatetime = values(updatetime)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mybatis.userinfo
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="addr != null and addr != ''">
+                addr = #{addr},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+
+</mapper>

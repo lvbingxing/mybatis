@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 绑定一个对应的dao/mapper接口-->
+<mapper namespace="com.lbx.mapper.UserMapper">
+
+    <resultMap id="userAll" type="user">
+        <id property="id" column="id"/>
+        <result property="userinfo.username" column="username"/>
+        <result property="userinfo.sex" column="sex"/>
+        <result property="userinfo.tel" column="tel"/>
+        <result property="userinfo.addr" column="addr"/>
+    </resultMap>
+
+    <select id="getUsers" resultType="User" parameterType="map">
+        select * from user limit #{page},#{rows};
+    </select>
+
+    <select id="addUser" parameterType="User">
+        insert into `user`(uname,pwd) values (#{uname},#{pwd});
+    </select>
+
+    <select id="findOneById" resultMap="userAll">
+        select * from user inner join userinfo u on user.id = u.id where user.id=#{id};
+    </select>
+
+    <select id="findOneByName" resultType="User" parameterType="java.lang.String">
+        select * from user where uname=#{name};
+    </select>
+
+
+    <insert id="insertOne" parameterType="User" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into `user`(uname,pwd) values(#{uname},#{pwd});
+    </insert>
+
+    <!--  使用 Map 传参-->
+    <insert id="insertUser" parameterType="map" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into user(uname, pwd) values (#{name},#{password});
+    </insert>
+
+    <update id="updateOne" parameterType="User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        update user set uname=#{uname},pwd=#{pwd} where id=#{id};
+    </update>
+
+    <delete id="deleteOne" parameterType="int">
+        delete from user where id=#{id};
+    </delete>
+</mapper>
